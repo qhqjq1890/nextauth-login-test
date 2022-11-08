@@ -1,34 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Planetscale
 
-## Getting Started
+https://github.com/planetscale/cli#installation 를 따라해 쓰시는 os에 따라 setup 하시고,
 
-First, run the development server:
+pscale auth login // pscale 에 로그인합니다
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+pscale region list -> region name 을 확인 하는겁니다 밑에서 region 을 설정할때 좋습니다. 제일 가까운 일본서버 를 선택하면 될거같습니다~
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+pscale database create {database name} --region {region name}
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+pscale connect <database name> // 작업하실때 connect 를 하고 작업을해야 합니다 이때 나온 url 을 .env 에서 수정해 사용하면 될거같습니다.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+.env
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+DATABASE_URL=mysql://127.0.0.1:3306/{databasename}
 
-## Learn More
+<span style="color:yellowgreen">
+ex) pscale database create mydb region ap-northeast -> db생성
+</span>
 
-To learn more about Next.js, take a look at the following resources:
+<span style="color:yellowgreen">
+ pscale connect mydb -> db연결
+</span>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+connect를 할경우 실행창을 유지해야 prisma에서 접속이 가능합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Prisma
 
-## Deploy on Vercel
+npx prisma db push // 모델을 작성한 이후 db 로 업로드를 해주셔야합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+해당 파일에서는 User 모델이 prisma.scheme에 작성되어 있습니다.

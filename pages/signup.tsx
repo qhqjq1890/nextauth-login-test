@@ -1,12 +1,16 @@
 import React, { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Postcode from "./postcode";
 
 const Signup: React.FC = (props) => {
   const [formStatus, setFormStatus] = useState<string>("");
 
+  const [address, setAddress] = useState<string>("");
+
   const nameInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
+  const detailInputRef = useRef<HTMLInputElement>(null);
   const idInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,7 +41,10 @@ const Signup: React.FC = (props) => {
     event.preventDefault();
 
     const enteredName = nameInputRef.current?.value;
-    const enteredAddress = addressInputRef.current?.value;
+    const enteredAddress =
+      (addressInputRef.current?.value as string) +
+      ", " +
+      (detailInputRef.current?.value as string);
     const enteredID = idInputRef.current?.value;
     const enteredPassword = passwordInputRef.current?.value;
     try {
@@ -109,15 +116,29 @@ const Signup: React.FC = (props) => {
               placeholder="Address"
               required
               ref={addressInputRef}
+              readOnly={true}
+              value={address}
             />
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white flex-none font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => {
-                console.log("hi");
-              }}
-            >
-              주소 찾기
-            </button>
+
+            <Postcode setAddress={setAddress} />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="address"
+          >
+            상세 주소
+          </label>
+          <div className="flex flex-auto space-x-4">
+            <input
+              className="shadow appearance-none border rounded grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="address"
+              type="text"
+              placeholder="Address"
+              required
+              ref={detailInputRef}
+            />
           </div>
         </div>
         <div className="mb-4">
