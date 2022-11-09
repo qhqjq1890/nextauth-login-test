@@ -8,11 +8,18 @@ const Signup: React.FC = (props) => {
 
   const [address, setAddress] = useState<string>("");
 
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const addressInputRef = useRef<HTMLInputElement>(null);
-  const detailInputRef = useRef<HTMLInputElement>(null);
+  //Input tag내에서 사용할 참조값
+  //id, password, name, nickname, profile_url, address
+  //detail_address, department_id, team_id
   const idInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const nicknameInputRef = useRef<HTMLInputElement>(null);
+  const profileUrlInputRef = useRef<HTMLInputElement>(null);
+  const addressInputRef = useRef<HTMLInputElement>(null);
+  const detailInputRef = useRef<HTMLInputElement>(null);
+  const departmentIdInputRef = useRef<HTMLInputElement>(null);
+  const teamIdInputRef = useRef<HTMLInputElement>(null);
 
   const { status } = useSession();
   const router = useRouter();
@@ -88,62 +95,6 @@ const Signup: React.FC = (props) => {
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            이름
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Name"
-            required
-            ref={nameInputRef}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="address"
-          >
-            주소
-          </label>
-          <div className="flex flex-auto space-x-4">
-            <input
-              className="shadow appearance-none border rounded grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="address"
-              type="text"
-              placeholder="Address"
-              required
-              ref={addressInputRef}
-              readOnly={true}
-              value={address}
-            />
-
-            <Postcode setAddress={setAddress} />
-          </div>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="address"
-          >
-            상세 주소
-          </label>
-          <div className="flex flex-auto space-x-4">
-            <input
-              className="shadow appearance-none border rounded grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="address"
-              type="text"
-              placeholder="Address"
-              required
-              ref={detailInputRef}
-            />
-          </div>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="id"
           >
             ID
@@ -157,7 +108,7 @@ const Signup: React.FC = (props) => {
             ref={idInputRef}
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="password"
@@ -168,9 +119,130 @@ const Signup: React.FC = (props) => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
+            placeholder="Password"
             required
             ref={passwordInputRef}
           />
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mt-2 mb-2"
+              htmlFor="name"
+            >
+              이름
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="Name"
+              required
+              ref={nameInputRef}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mt-2 mb-2"
+              htmlFor="nickname"
+            >
+              닉네임
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="nickname"
+              type="text"
+              placeholder="Nickname"
+              required
+              ref={nicknameInputRef}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mt-2 mb-2"
+              htmlFor="profile"
+            >
+              프로필
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="profile"
+              type="text"
+              placeholder="ProfileImage"
+              required
+              ref={profileUrlInputRef}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="address"
+            >
+              주소
+            </label>
+            <div className="flex flex-auto space-x-4">
+              <input
+                className="shadow appearance-none border rounded grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="address"
+                type="text"
+                placeholder="Address"
+                required
+                ref={addressInputRef}
+                readOnly={true}
+                value={address}
+              />
+
+              <Postcode setAddress={setAddress} />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="detailaddress"
+            >
+              상세 주소
+            </label>
+            <div className="flex flex-auto space-x-4">
+              <input
+                className="shadow appearance-none border rounded grow py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="detailaddress"
+                type="text"
+                placeholder="Detail Address"
+                required
+                ref={detailInputRef}
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mt-2 mb-2"
+              htmlFor="department"
+            >
+              부서
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="department"
+              type="text"
+              placeholder="department"
+              required
+              ref={departmentIdInputRef}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mt-2 mb-2"
+              htmlFor="team"
+            >
+              팀
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="team"
+              type="text"
+              placeholder="team"
+              required
+              ref={teamIdInputRef}
+            />
+          </div>
 
           <p className="text-red-500 text-xs italic">{formStatus}</p>
         </div>

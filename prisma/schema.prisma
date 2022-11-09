@@ -2,21 +2,90 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
-model User{
-  id String @unique
-  password String
-  name String
-  address String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Admin {
+  admin_srl Int    @unique
+  admin_id  Int    @id @unique @default(autoincrement())
+  name      String
+  nickname  String
+}
+
+model User {
+  user_srl       Int      @id @unique // 회원 고유 번호
+  id             Int      @unique // 아이디
+  password       String // 비밀번호
+  name           String // 이름
+  nickname       String
+  profile_url    String
+  address        String
+  detail_address String
+  department_id  Int
+  team_id        Int
+  friends        Friend[]
+}
+
+model Friend {
+  user_id    Int     @unique
+  friend_id  Int     @unique
+  is_like    Boolean
+  is_blocked Boolean
+  user       User    @relation(fields: [user_id], references: [id])
+}
+
+model Department {
+  dep_id   Int    @id @unique @default(autoincrement())
+  dep_name String @unique
+  teams    Team[]
+}
+
+model Team {
+  team_id    Int        @id @unique
+  parent_id  Int // Deapartment.dep_id(부서 식별 번호)
+  team_name  String     @unique
+  deaprtemnt Department @relation(fields: [parent_id], references: [dep_id])
+}
+
+model Message {
+  message_id  Int      @id @unique @default(autoincrement())
+  room_id     Int
+  sender_id   Int
+  reciever_id Int
+  content     String
+  is_read     Boolean  @default(false)
+  created_at  DateTime @default(now())
+}
+
+model Emoji {
+  emoji_id Int    @id @unique @default(autoincrement())
+  name     String
+  url      String
+}
+
+model Files {
+  file_id Int    @id @unique @default(autoincrement())
+  title   String
+  url     String
+}
+
+model Member {
+  room_id    Int
+  user_id    Int      @unique
+  created_at DateTime @default(now())
+  chat_room  ChatRoom @relation(fields: [room_id], references: [room_no])
+}
+
+model ChatRoom {
+  room_no    Int      @id @unique @default(autoincrement())
+  is_group   Boolean  @default(false) // 기본 생성 채팅방은 1:1
+  created_at DateTime @default(now())
+  mebers     Member[]
 }
