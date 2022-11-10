@@ -20,8 +20,8 @@ model Admin {
 }
 
 model User {
-  user_srl       Int      @id @unique // 회원 고유 번호
-  id             Int      @unique // 아이디
+  user_srl       Int      @id @unique @default(autoincrement())// 회원 고유 번호
+  id             String      @unique // 아이디
   password       String // 비밀번호
   name           String // 이름
   nickname       String
@@ -34,8 +34,8 @@ model User {
 }
 
 model Friend {
-  user_id    Int     @unique
-  friend_id  Int     @unique
+  user_id    String     @unique
+  friend_id  String     @unique
   is_like    Boolean
   is_blocked Boolean
   user       User    @relation(fields: [user_id], references: [id])

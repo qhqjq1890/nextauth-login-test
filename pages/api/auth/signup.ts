@@ -11,11 +11,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const data = req.body;
 
-  const { name, address, id, password } = data;
+  const {
+    id,
+    password,
+    name,
+    nickname,
+    profileImageURL,
+    address,
+    detailAddress,
+    deptid,
+    teamid,
+  } = data;
 
-  if (!name || !address || !id || !password || password.trim().length < 7) {
+  if (
+    !id ||
+    !password ||
+    !name ||
+    !nickname ||
+    !profileImageURL ||
+    !address ||
+    !detailAddress ||
+    !deptid ||
+    !teamid ||
+    password.trim().length < 7
+  ) {
     res.status(422).json({
-      message: name + address + id + password,
+      message: "회원가입에 오류가 발생했습니다.",
       error: true,
     });
     return;
@@ -40,10 +61,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const result = await prisma.user.create({
     data: {
-      name: name,
-      address: address,
-      password: hashedPassword,
       id: id,
+      password: hashedPassword,
+      name: name,
+      nickname: nickname,
+      profile_url: profileImageURL,
+      address: address,
+      detail_address: detailAddress,
+      department_id: deptid,
+      team_id: teamid,
     },
   });
 
